@@ -1,0 +1,41 @@
+{
+  "name": "rapp",
+  "version": "1.0.0",
+  "description": "Minimalistic ES6 React application framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kallaspriit/rapp.git"
+  },
+  "keywords": [
+    "react",
+    "framework"
+  ],
+  "author": "Priit Kallas <kallaspriit@gmail.com> (http://stagnationlab.com/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kallaspriit/rapp/issues"
+  },
+  "homepage": "https://github.com/kallaspriit/rapp#readme",
+  "dependencies": {
+    "babel": "^5.8.20",
+    "babel-core": "^5.8.20",
+    "babel-loader": "^5.3.2",
+    "eslint": "^1.0.0",
+    "eslint-plugin-react": "^3.2.0",
+    "glob": "^5.0.14",
+    "gulp": "^3.9.0",
+    "gulp-util": "^3.0.6",
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.13.6",
+    "karma-jasmine": "^0.3.6",
+    "karma-phantomjs-launcher": "^0.2.0",
+    "phantomjs": "^1.9.17",
+    "react": "^0.13.3",
+    "react-router": "^0.13.3",
+    "webpack": "^1.10.5"
+  }
+}
