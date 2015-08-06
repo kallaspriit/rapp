@@ -10,7 +10,7 @@ export default React.createClass({
 			<div>
 				<h1>RAPP</h1>
 				<MenuComponent/>
-				<RouteHandler/>
+				<RouteHandler data={this.props.data} loading={this.props.loading}/>
 			</div>
 		);
 	}

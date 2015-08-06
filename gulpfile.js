@@ -58,9 +58,9 @@ gulp.task('webpack', function(done) {
 			throw new gutil.PluginError('webpack', err);
 		}
 
-        /*gutil.log("[webpack]", stats.toString({
+        gutil.log("[webpack]", stats.toString({
             // output options
-        }));*/
+        }));
 
         done();
     });
@@ -80,9 +80,18 @@ gulp.task('test', ['build'], function (done) {
 });
 
 // watches for file changes and rebuilds as needed
-/*gulp.task('dev', ['build'], function() {
-	gulp.watch([config.files.src, config.files.views, config.files.test], ['build']);
-});*/
+gulp.task('dev', ['build'], function() {
+	gulp.watch([
+		'gulpfile.js',
+		'app.js',
+		'karma.conf.js',
+		'config/**/*.js',
+		'services/**/*.js',
+		'specs/**/*.js',
+		'stores/**/*.js',
+		'views/**/*.js'
+	], ['build']);
+});
 
 
 // default task when executing just "> gulp"
