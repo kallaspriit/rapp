@@ -11,9 +11,12 @@ Minimalistic ES6 React application framework
 - react-router
 
 ## TODO
+- flux (redux)
 - dev server
 - hot reload
 - resource generators
 - gulp run eslint
 - travis integration
 - testing views and components
+- less
+- style reload

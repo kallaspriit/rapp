@@ -2,6 +2,7 @@ var gulp = require('gulp'),
 	gutil = require('gulp-util'),
 	glob = require('glob'),
 	KarmaServer = require('karma').Server,
+	WebpackDevServer = require('webpack-dev-server'),
 	webpack = require('webpack'),
 	fs = require('fs'),
 	path = require('path');
@@ -23,18 +24,20 @@ gulp.task('webpack', function(done) {
 
 		// resolve root path
 		resolve: {
-			root: path.resolve('./')
+			root: path.resolve('./'),
+			extensions: ['', '.js']
 		},
 
 		// entry points for the bundle
 		entry: {
-			app: 'app.js',
+			app: ['app.js'],
 			test: specFiles
 		},
 
 		// bundle output
 		output: {
 			path: 'build/dist',
+			publicPath: '/xxx/',
 			filename: '[name].js',
 			devtoolModuleFilenameTemplate: 'app:///[resource-path]',
 			pathinfo: true
@@ -44,12 +47,20 @@ gulp.task('webpack', function(done) {
 		module: {
 			loaders: [
 				{
-					test: /\.(js|jsx)$/,
+					test: /\.js$/,
 					exclude: /node_modules/,
-					loader: 'babel-loader?cacheDirectory=build/cache'
+
+					// https://github.com/babel/babel-loader
+					loaders: ['react-hot', 'babel?cacheDirectory=build/cache&stage=0'],
 				}
 			]
 		},
+
+		// plugins setup
+		plugins: [
+			new webpack.HotModuleReplacementPlugin(),
+			new webpack.NoErrorsPlugin()
+		],
 
 		// generate source maps
 		devtool: 'source-map'
@@ -88,7 +99,7 @@ gulp.task('dev', ['build'], function() {
 		'config/**/*.js',
 		'services/**/*.js',
 		'specs/**/*.js',
-		'stores/**/*.js',
+		'reducers/**/*.js',
 		'views/**/*.js'
 	], ['build']);
 });

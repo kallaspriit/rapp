@@ -29,11 +29,12 @@ router.run((Root, state) => {
 	if (promises.length > 0) {
 		log('there is data to load..');
 
-		React.render(<Root loading={true}/>, document.getElementById('app'));
+		React.render(<Root data={null} loading={true}/>, document.getElementById('app'));
 	} else {
 		log('no data to load..');
 	}
 
+	// TODO handle aborting loading data if view is changed before data is loaded
 	Promise.all(promises).then((data) => {
 		log('data loaded', data);
 
