@@ -1,5 +1,5 @@
-export default function log(message) {
+export default function log(...args) {
 
-	console.log('LOG', message);
+	console.log.apply(console, args);
 
 }

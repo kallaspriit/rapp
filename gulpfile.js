@@ -58,9 +58,9 @@ gulp.task('webpack', function(done) {
 			throw new gutil.PluginError('webpack', err);
 		}
 
-        gutil.log("[webpack]", stats.toString({
+        /*gutil.log("[webpack]", stats.toString({
             // output options
-        }));
+        }));*/
 
         done();
     });
