@@ -1,6 +1,5 @@
 var path = require('path'),
 	webpack = require('webpack'),
-	ExtractTextPlugin = require('extract-text-webpack-plugin'),
 	HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -42,7 +41,7 @@ module.exports = {
 			},
 			{
                 test:   /\.css$/,
-                loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader')
+                loader: 'style-loader!css-loader!postcss-loader'
             }
 		]
 	},
@@ -59,7 +58,6 @@ module.exports = {
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.NoErrorsPlugin(),
-		new ExtractTextPlugin('gfx/app.css', { allChunks: true }),
 		new HtmlWebpackPlugin({
 			title: 'RAPP (dev)',
 			filename: 'index.html',

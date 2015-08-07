@@ -100,6 +100,7 @@ gulp.task('production', ['build'], function() {
 		'specs/**/*.js',
 		'reducers/**/*.js',
 		'views/**/*.js',
+		'gfx/**/*.*',
 		'build/gen/**/*.js'
 	], ['build']);
 });
