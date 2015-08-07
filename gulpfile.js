@@ -7,81 +7,55 @@ var gulp = require('gulp'),
 	webpack = require('webpack'),
 	webpackConfig = {
 		dev: require('./config/webpack.dev'),
+		production: require('./config/webpack.production'),
 		specs: require('./config/webpack.specs')
 	};
 
 // TODO generate build/gen/reducers.js
 
-// webpack compilation, see http://webpack.github.io/docs/configuration.html for options
-gulp.task('webpack-dev', function(done) {
-	// run webpack to build the application and tests bundles
-    webpack(webpackConfig.dev, function(err, stats) {
+// runs webpack with given configuration
+function runWebpack(config, done) {
+	webpack(config, function(err, stats) {
         if(err) {
 			throw new gutil.PluginError('webpack', err);
 		}
 
-        gutil.log("[webpack]", stats.toString({
-            // output options
-        }));
-
-        done();
-    });
-});
-
-gulp.task('webpack-specs', function(done) {
-	// run webpack to build the application and tests bundles
-    webpack(webpackConfig.specs, function(err, stats) {
-        if(err) {
-			throw new gutil.PluginError('webpack', err);
+		if (stats.hasErrors()) {
+			throw new gutil.PluginError('webpack', stats.toString());
+		} else if (stats.hasWarnings()) {
+			gutil.log("[webpack]", 'completed with warnings', stats.toString());
+		} else {
+			gutil.log("[webpack]", 'completed without warnings :)');
 		}
 
-        gutil.log("[webpack]", stats.toString({
-            // output options
-        }));
-
         done();
     });
+}
+
+// builds the development version bundle
+// see http://webpack.github.io/docs/configuration.html for options
+gulp.task('build-dev', function(done) {
+    runWebpack(webpackConfig.dev, done);
 });
 
-gulp.task('css-dev', function() {
-	return gulp.src('gfx/**/*.css')
-        .pipe(postcss([
-			require('cssnext')(),
-			require('cssnano')()
-		]))
-        .pipe(gulp.dest('build/dev'));
+// builds the production version bundle
+gulp.task('build-production', function(done) {
+    runWebpack(webpackConfig.production, done);
 });
 
-// rebuilds the dev project
-gulp.task('build-dev', ['webpack-dev', 'css-dev']);
-
-// rebuilds the production project
-// TODO implement production config
-gulp.task('build-production', ['webpack-production', 'css-production']);
+// builds the specs bundle
+gulp.task('build-specs', function(done) {
+    runWebpack(webpackConfig.specs, done);
+});
 
 // run tests using Karma
-gulp.task('test', ['webpack-specs'], function (done) {
+gulp.task('test', ['build-specs'], function (done) {
 	var server = new KarmaServer({
 		configFile: __dirname + '/karma.conf.js',
 		singleRun: true
 	}, done);
 
 	server.start();
-});
-
-// watches for file changes and rebuilds as needed without server
-gulp.task('watch', ['build'], function() {
-	gulp.watch([
-		'gulpfile.js',
-		'app.js',
-		'karma.conf.js',
-		'config/**/*.js',
-		'services/**/*.js',
-		'specs/**/*.js',
-		'reducers/**/*.js',
-		'views/**/*.js',
-		'build/gen/**/*.js'
-	], ['build']);
 });
 
 gulp.task('dev', function() {

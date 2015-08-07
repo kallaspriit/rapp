@@ -4,7 +4,6 @@ import {Route, NotFoundRoute, DefaultRoute} from 'react-router';
 import RootView from '../views/RootView';
 import IndexView from '../views/IndexView';
 import AboutView from '../views/AboutView';
-import UserView from '../views/UserView';
 import CounterView from '../views/CounterView';
 
 import NotFoundView from '../views/NotFoundView';
@@ -14,7 +13,6 @@ export default (
 	<Route handler={RootView}>
 		<Route name="index" path="index" handler={IndexView}/>
 		<Route name="about" path="about" handler={AboutView}/>
-		<Route name="user" path="user/:id" handler={UserView}/>
 		<Route name="counter" path="counter" handler={CounterView}/>
 
 		<DefaultRoute name="default" handler={IndexView}/>

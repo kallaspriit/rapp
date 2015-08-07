@@ -24,7 +24,7 @@ module.exports = {
 	// bundle output
 	output: {
 		path: path.resolve('build/dev'),
-		publicPath: '/build/dev/', // TODO resolve this
+		publicPath: '/build/dev/',
 		filename: '[name].js',
 		devtoolModuleFilenameTemplate: 'app:///[resource-path]',
 		pathinfo: true
@@ -36,8 +36,6 @@ module.exports = {
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,
-
-				// https://github.com/babel/babel-loader
 				loaders: ['react-hot', 'babel?stage=0'],
 			},
 			{

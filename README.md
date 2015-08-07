@@ -21,3 +21,5 @@ Minimalistic ES6 React application framework
 - gulp run eslint
 - travis integration
 - testing views and components
+- redux dev tools
+- production version generating
