@@ -3,7 +3,9 @@ var gulp = require('gulp'),
 	KarmaServer = require('karma').Server,
 	WebpackDevServer = require('webpack-dev-server'),
 	fs = require('fs'),
+	path = require('path'),
 	postcss = require('gulp-postcss'),
+	webserver = require('gulp-webserver')
 	webpack = require('webpack'),
 	webpackConfig = {
 		dev: require('./config/webpack.dev'),
@@ -30,24 +32,27 @@ function runWebpack(config, done) {
     });
 }
 
+// builds the production version bundle
+gulp.task('build', function(done) {
+	// copy gfx files
+	gulp.src(['gfx/**/*']).pipe(gulp.dest('build/production/gfx'));
+
+    runWebpack(webpackConfig.production, done);
+});
+
 // builds the development version bundle
 // see http://webpack.github.io/docs/configuration.html for options
 gulp.task('build-dev', function(done) {
-    runWebpack(webpackConfig.dev, done);
-});
+	// copy gfx files
+	gulp.src(['gfx/**/*']).pipe(gulp.dest('build/dev/gfx'));
 
-// builds the production version bundle
-gulp.task('build-production', function(done) {
-    runWebpack(webpackConfig.production, done);
+    runWebpack(webpackConfig.dev, done);
 });
 
 // builds the specs bundle
 gulp.task('build-specs', function(done) {
     runWebpack(webpackConfig.specs, done);
 });
-
-// builds the specs bundle
-gulp.task('build', ['build-dev', 'build-production', 'build-specs']);
 
 // run tests using Karma
 gulp.task('test', ['build-specs'], function (done) {
@@ -60,7 +65,7 @@ gulp.task('test', ['build-specs'], function (done) {
 });
 
 // start development server with hot-reloading
-gulp.task('dev', function() {
+gulp.task('dev', ['production'], function() {
 	new WebpackDevServer(webpack(webpackConfig.dev), {
 		publicPath: webpackConfig.dev.output.publicPath,
 		hot: true,
@@ -77,6 +82,27 @@ gulp.task('dev', function() {
 		});
 });
 
+// start the production server with file changes watcher
+gulp.task('production', ['build'], function() {
+	gulp.src('build/production')
+    	.pipe(webserver({
+			host: 'localhost',
+			port: 3001,
+			fallback: 'index.html',
+		}));
+
+	gulp.watch([
+		'gulpfile.js',
+		'app.js',
+		'karma.conf.js',
+		'config/**/*.js',
+		'services/**/*.js',
+		'specs/**/*.js',
+		'reducers/**/*.js',
+		'views/**/*.js',
+		'build/gen/**/*.js'
+	], ['build']);
+});
 
 // default task when executing just "> gulp", builds the application and runs tests
 gulp.task('default', ['build', 'test']);

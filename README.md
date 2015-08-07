@@ -9,9 +9,10 @@ It provides dev server with hot reload, production version generator, test frame
 - open [http://localhost:3000](http://localhost:3000/)
 
 ## Gulp tasks
-- `> gulp dev` - starts the dev server on port 3000
+- `> gulp dev` - starts the dev server on port 3000 and production server on 3001
+- `> gulp production` - starts production server on 3001, application is rebuilt on file changes
 - `> gulp test` - runs the test suite
-- `> gulp build` - builds the dev, production and test bundles, see the "build" directory
+- `> gulp build` - builds the production bundle in "build/production" directory
 
 ## Application libraries
 - [react](http://facebook.github.io/react/) - facebook's user interface library

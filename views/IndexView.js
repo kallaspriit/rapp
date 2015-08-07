@@ -6,6 +6,7 @@ export default React.createClass({
 		return (
 			<div>
 				Index
+				<img src="gfx/react-logo.png"/>
 			</div>
 		);
 	}
