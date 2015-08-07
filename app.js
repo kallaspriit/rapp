@@ -5,7 +5,11 @@ import Promise from 'bluebird';
 import routes from './config/routes';
 import log from './services/Log';
 
-// enable long stack traces
+import css from './gfx/app.css';
+
+console.log('CSS', css);
+
+// enable bluebird promises long stack traces
 Promise.longStackTraces();
 
 // setup react router

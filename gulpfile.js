@@ -3,6 +3,7 @@ var gulp = require('gulp'),
 	KarmaServer = require('karma').Server,
 	WebpackDevServer = require('webpack-dev-server'),
 	fs = require('fs'),
+	postcss = require('gulp-postcss'),
 	webpack = require('webpack'),
 	webpackConfig = {
 		dev: require('./config/webpack.dev'),
@@ -42,11 +43,21 @@ gulp.task('webpack-specs', function(done) {
     });
 });
 
+gulp.task('css-dev', function() {
+	return gulp.src('gfx/**/*.css')
+        .pipe(postcss([
+			require('cssnext')(),
+			require('cssnano')()
+		]))
+        .pipe(gulp.dest('build/dev'));
+});
+
 // rebuilds the dev project
-gulp.task('build', ['webpack-dev']);
+gulp.task('build-dev', ['webpack-dev', 'css-dev']);
 
 // rebuilds the production project
-gulp.task('dist', ['webpack-production']);
+// TODO implement production config
+gulp.task('build-production', ['webpack-production', 'css-production']);
 
 // run tests using Karma
 gulp.task('test', ['webpack-specs'], function (done) {

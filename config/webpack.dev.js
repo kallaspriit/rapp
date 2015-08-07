@@ -24,7 +24,7 @@ module.exports = {
 	// bundle output
 	output: {
 		path: path.resolve('build/dev'),
-		publicPath: '/xxx/', // TODO resolve this
+		publicPath: '/build/dev/', // TODO resolve this
 		filename: '[name].js',
 		devtoolModuleFilenameTemplate: 'app:///[resource-path]',
 		pathinfo: true
@@ -39,9 +39,21 @@ module.exports = {
 
 				// https://github.com/babel/babel-loader
 				loaders: ['react-hot', 'babel?stage=0'],
-			}
+			},
+			{
+                test:   /\.css$/,
+                loader: "style-loader!css-loader!postcss-loader"
+            }
 		]
 	},
+
+	// configure postcss
+	postcss: function () {
+        return [
+			require('cssnext')(),
+			require('cssnano')()
+		];
+    },
 
 	// plugins setup
 	plugins: [
