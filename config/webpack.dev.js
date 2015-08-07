@@ -14,12 +14,16 @@ module.exports = {
 
 	// entry points for the bundle
 	entry: {
-		app: ['app.js']
+		app: [
+			'webpack-dev-server/client?http://localhost:3000',
+    		'webpack/hot/only-dev-server',
+			'app.js'
+		]
 	},
 
 	// bundle output
 	output: {
-		path: 'build/dev',
+		path: path.resolve('build/dev'),
 		publicPath: '/xxx/', // TODO resolve this
 		filename: '[name].js',
 		devtoolModuleFilenameTemplate: 'app:///[resource-path]',

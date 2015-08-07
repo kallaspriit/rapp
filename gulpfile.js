@@ -9,6 +9,8 @@ var gulp = require('gulp'),
 		specs: require('./config/webpack.specs')
 	};
 
+// TODO generate build/gen/reducers.js
+
 // webpack compilation, see http://webpack.github.io/docs/configuration.html for options
 gulp.task('webpack-dev', function(done) {
 	// run webpack to build the application and tests bundles
@@ -40,11 +42,14 @@ gulp.task('webpack-specs', function(done) {
     });
 });
 
-// rebuilds the project once, does not start watchers or server
-gulp.task('build', ['webpack-dev', 'webpack-specs']);
+// rebuilds the dev project
+gulp.task('build', ['webpack-dev']);
+
+// rebuilds the production project
+gulp.task('dist', ['webpack-production']);
 
 // run tests using Karma
-gulp.task('test', ['build'], function (done) {
+gulp.task('test', ['webpack-specs'], function (done) {
 	var server = new KarmaServer({
 		configFile: __dirname + '/karma.conf.js',
 		singleRun: true
@@ -53,8 +58,8 @@ gulp.task('test', ['build'], function (done) {
 	server.start();
 });
 
-// watches for file changes and rebuilds as needed
-gulp.task('dev', ['build'], function() {
+// watches for file changes and rebuilds as needed without server
+gulp.task('watch', ['build'], function() {
 	gulp.watch([
 		'gulpfile.js',
 		'app.js',
@@ -68,8 +73,21 @@ gulp.task('dev', ['build'], function() {
 	], ['build']);
 });
 
-gulp.task('server', ['build'], function() {
+gulp.task('dev', function() {
+	new WebpackDevServer(webpack(webpackConfig.dev), {
+		publicPath: webpackConfig.dev.output.publicPath,
+		hot: true,
+		historyApiFallback: true,
+		stats: {
+			colors: true
+		}
+	}).listen(3000, 'localhost', function (err) {
+			if (err) {
+				console.log(err);
+			}
 
+			console.log('Listening at localhost:3000');
+		});
 });
 
 

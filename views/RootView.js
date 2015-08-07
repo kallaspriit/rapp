@@ -17,7 +17,7 @@ export default React.createClass({
 	render() {
 		return (
 			<div>
-				<h1>RAPP</h1>
+				<h1>RAPP - The React Application Framework</h1>
 				<MenuComponent/>
 				<Provider store={store}>
 					{() => <RouteHandler {...this.props}/>}
