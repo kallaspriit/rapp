@@ -1,5 +1,7 @@
 var path = require('path'),
-	webpack = require('webpack');
+	webpack = require('webpack'),
+	ExtractTextPlugin = require('extract-text-webpack-plugin'),
+	HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
 
@@ -24,7 +26,7 @@ module.exports = {
 	// bundle output
 	output: {
 		path: path.resolve('build/dev'),
-		publicPath: '/build/dev/',
+		publicPath: '',
 		filename: '[name].js',
 		devtoolModuleFilenameTemplate: 'app:///[resource-path]',
 		pathinfo: true
@@ -40,7 +42,7 @@ module.exports = {
 			},
 			{
                 test:   /\.css$/,
-                loader: "style-loader!css-loader!postcss-loader"
+                loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader')
             }
 		]
 	},
@@ -56,7 +58,13 @@ module.exports = {
 	// plugins setup
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),
-		new webpack.NoErrorsPlugin()
+		new webpack.NoErrorsPlugin(),
+		new ExtractTextPlugin('gfx/app.css', { allChunks: true }),
+		new HtmlWebpackPlugin({
+			title: 'RAPP (dev)',
+			filename: 'index.html',
+			template: 'index.template.html'
+		})
 	],
 
 	// generate source maps

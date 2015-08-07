@@ -1,6 +1,6 @@
 var path = require('path'),
 	webpack = require('webpack'),
-	ExtractTextPlugin = require('extract-text-webpack-plugin');
+	ExtractTextPlugin = require('extract-text-webpack-plugin'),
 	HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -62,7 +62,7 @@ module.exports = {
 		}),
 		new ExtractTextPlugin('gfx/app.css', { allChunks: true }),
 		new HtmlWebpackPlugin({
-			title: 'Redux React Router Async Example',
+			title: 'RAPP',
 			filename: 'index.html',
 			template: 'index.template.html'
 		})

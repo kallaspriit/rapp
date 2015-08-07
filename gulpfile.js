@@ -24,8 +24,6 @@ function runWebpack(config, done) {
 			throw new gutil.PluginError('webpack', stats.toString());
 		} else if (stats.hasWarnings()) {
 			gutil.log("[webpack]", 'completed with warnings', stats.toString());
-		} else {
-			gutil.log("[webpack]", 'completed without warnings :)');
 		}
 
         done();
@@ -48,6 +46,9 @@ gulp.task('build-specs', function(done) {
     runWebpack(webpackConfig.specs, done);
 });
 
+// builds the specs bundle
+gulp.task('build', ['build-dev', 'build-production', 'build-specs']);
+
 // run tests using Karma
 gulp.task('test', ['build-specs'], function (done) {
 	var server = new KarmaServer({
@@ -58,6 +59,7 @@ gulp.task('test', ['build-specs'], function (done) {
 	server.start();
 });
 
+// start development server with hot-reloading
 gulp.task('dev', function() {
 	new WebpackDevServer(webpack(webpackConfig.dev), {
 		publicPath: webpackConfig.dev.output.publicPath,
@@ -76,5 +78,5 @@ gulp.task('dev', function() {
 });
 
 
-// default task when executing just "> gulp"
-gulp.task('default', ['build']);
+// default task when executing just "> gulp", builds the application and runs tests
+gulp.task('default', ['build', 'test']);
