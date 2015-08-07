@@ -1,21 +1,18 @@
 import React from 'react';
 import { RouteHandler } from 'react-router';
-
-// https://www.youtube.com/watch?v=xsSnOQynTHs
-// http://gaearon.github.io/redux/index.html
-// https://github.com/gaearon/redux
 import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
+import * as reducers from '../build/gen/reducers';
 
 import MenuComponent from './components/MenuComponent';
 
-// TODO load all in directory, how?
-//import * as reducers from '../reducers';
-import counter from '../reducers/counter-reducer';
-
-const reducer = combineReducers({ counter });
+const reducer = combineReducers(reducers);
 const store = createStore(reducer);
 
+// REDUX
+// https://www.youtube.com/watch?v=xsSnOQynTHs
+// http://gaearon.github.io/redux/index.html
+// https://github.com/gaearon/redux
 export default React.createClass({
 	render() {
 		return (

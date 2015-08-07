@@ -1,70 +1,33 @@
 var gulp = require('gulp'),
 	gutil = require('gulp-util'),
-	glob = require('glob'),
 	KarmaServer = require('karma').Server,
 	WebpackDevServer = require('webpack-dev-server'),
-	webpack = require('webpack'),
 	fs = require('fs'),
-	path = require('path');
+	webpack = require('webpack'),
+	webpackConfig = {
+		dev: require('./config/webpack.dev'),
+		specs: require('./config/webpack.specs')
+	};
 
 // webpack compilation, see http://webpack.github.io/docs/configuration.html for options
-gulp.task('webpack', function(done) {
-	// create the build and cache directories
-	if (!fs.existsSync('build')){ fs.mkdirSync('build'); }
-	if (!fs.existsSync('build/cache')){ fs.mkdirSync('build/cache'); }
-
-	// find the spec files
-	var specFiles = glob.sync('specs/**/*.js');
-
+gulp.task('webpack-dev', function(done) {
 	// run webpack to build the application and tests bundles
-    webpack({
+    webpack(webpackConfig.dev, function(err, stats) {
+        if(err) {
+			throw new gutil.PluginError('webpack', err);
+		}
 
-		// the base directory (absolute path!) for resolving the entry option
-		context: path.resolve('./'),
+        gutil.log("[webpack]", stats.toString({
+            // output options
+        }));
 
-		// resolve root path
-		resolve: {
-			root: path.resolve('./'),
-			extensions: ['', '.js']
-		},
+        done();
+    });
+});
 
-		// entry points for the bundle
-		entry: {
-			app: ['app.js'],
-			test: specFiles
-		},
-
-		// bundle output
-		output: {
-			path: 'build/dist',
-			publicPath: '/xxx/',
-			filename: '[name].js',
-			devtoolModuleFilenameTemplate: 'app:///[resource-path]',
-			pathinfo: true
-		},
-
-		// modules setup
-		module: {
-			loaders: [
-				{
-					test: /\.js$/,
-					exclude: /node_modules/,
-
-					// https://github.com/babel/babel-loader
-					loaders: ['react-hot', 'babel?cacheDirectory=build/cache&stage=0'],
-				}
-			]
-		},
-
-		// plugins setup
-		plugins: [
-			new webpack.HotModuleReplacementPlugin(),
-			new webpack.NoErrorsPlugin()
-		],
-
-		// generate source maps
-		devtool: 'source-map'
-    }, function(err, stats) {
+gulp.task('webpack-specs', function(done) {
+	// run webpack to build the application and tests bundles
+    webpack(webpackConfig.specs, function(err, stats) {
         if(err) {
 			throw new gutil.PluginError('webpack', err);
 		}
@@ -78,7 +41,7 @@ gulp.task('webpack', function(done) {
 });
 
 // rebuilds the project once, does not start watchers or server
-gulp.task('build', ['webpack']);
+gulp.task('build', ['webpack-dev', 'webpack-specs']);
 
 // run tests using Karma
 gulp.task('test', ['build'], function (done) {
@@ -100,8 +63,13 @@ gulp.task('dev', ['build'], function() {
 		'services/**/*.js',
 		'specs/**/*.js',
 		'reducers/**/*.js',
-		'views/**/*.js'
+		'views/**/*.js',
+		'build/gen/**/*.js'
 	], ['build']);
+});
+
+gulp.task('server', ['build'], function() {
+
 });
 
 
