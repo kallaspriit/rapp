@@ -1,8 +1,6 @@
 # RAPP - React APP
-Minimalistic ES6 React application framework
-
-## What is this?
 **RAPP (React APP) is a happy marriage of [react](http://facebook.github.io/react/), [react-router](http://rackt.github.io/react-router/) and [redux](http://gaearon.github.io/redux/index.html), providing reasonable directory structure and workflow tooling for authoring powerful modern web applications.**
+
 It provides dev server with hot reload, production version generator, test framework and linting. You can write your code in ES6 and simple production app weighs in at around 284KB without gzip.
 
 ## Getting started
@@ -10,7 +8,7 @@ It provides dev server with hot reload, production version generator, test frame
 - `> gulp dev` - starts the dev server on port 3000
 - open [http://localhost:3000](http://localhost:3000/)
 
-# Gulp tasks
+## Gulp tasks
 - `> gulp dev` - starts the dev server on port 3000
 - `> gulp test` - runs the test suite
 - `> gulp build` - builds the dev, production and test bundles, see the "build" directory

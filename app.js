@@ -9,8 +9,8 @@ import css from './gfx/app.css';
 // setup react router
 let router = Router.create({
 	routes: routes,
-	location: Router.HashLocation
-	//location: Router.HistoryLocation
+	//location: Router.HashLocation
+	location: Router.HistoryLocation
 })
 
 // run the application
@@ -24,18 +24,13 @@ router.run((Root, state) => {
 
 	log('matched route', state, promises);
 
+	// render the view in loading state if there is data to fetch
 	if (promises.length > 0) {
-		log('there is data to load..');
-
 		React.render(<Root data={null} loading={true}/>, document.getElementById('app'));
-	} else {
-		log('no data to load..');
 	}
 
 	// TODO handle aborting loading data if view is changed before data is loaded
 	Promise.all(promises).then((data) => {
-		log('data loaded', data);
-
 		React.render(<Root data={data} loading={false}/>, document.getElementById('app'));
 	})
 });
