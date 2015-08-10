@@ -36,6 +36,7 @@ It provides dev server with hot reload, production version generator, test frame
 - full source maps support
 - task automation with gulp
 - built-in dev server
+- development issues such as linter errors are shown as desktop notifications
 - redux dev tools including time-machine
 - hot reload for views, flux reducers (redux flux stores) and CSS
 - production version generation

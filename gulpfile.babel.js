@@ -31,34 +31,78 @@ const sources = [
 	'build/gen/**/*.js'
 ];
 
+// display desktop notifications
+let notify = {
+
+	// notify of user bug detected
+	bug: function(title, description) {
+		notifier.notify({
+			title: title,
+			message: description,
+			sound: true,
+			icon: path.join(__dirname, 'assets', 'icons', 'notification-bug.png')
+		});
+	},
+
+	error: function(title, description) {
+		notifier.notify({
+			title: title,
+			message: description,
+			sound: true,
+			icon: path.join(__dirname, 'assets', 'icons', 'notification-error.png')
+		});
+	}
+};
+
+function handleWebpackResult(err, stats, done) {
+	if (err) {
+		notify.error(
+			'Webpack error occured',
+			'See the console for details'
+		);
+
+		throw new gutil.PluginError('webpack', err);
+	}
+
+	if (stats.hasErrors()) {
+		notify.error(
+			'Webpack failed to build the application',
+			'See the console for details'
+		);
+
+		throw new gutil.PluginError('webpack', stats.toString());
+	} else if (stats.hasWarnings()) {
+		notify.bug(
+			'Webpack completed with warnings',
+			'See the console for details'
+		);
+
+		gutil.log('[webpack]', 'completed with warnings', stats.toString());
+	} else {
+		gutil.log('[webpack]', stats.toString({
+			assets: true,
+			colors: true,
+			version: true,
+			modules: false,
+			hash: false,
+			timings: false,
+			chunks: true,
+			chunkModules: false,
+			reasons: true,
+			cached: true,
+			chunkOrigins: true
+		}));
+	}
+
+	if (typeof done === 'function') {
+		done();
+	}
+}
+
 // runs webpack with given configuration
 function runWebpack(config, done) {
 	webpack(config, function(err, stats) {
-		if (err) {
-			throw new gutil.PluginError('webpack', err);
-		}
-
-		if (stats.hasErrors()) {
-			throw new gutil.PluginError('webpack', stats.toString());
-		} else if (stats.hasWarnings()) {
-			gutil.log('[webpack]', 'completed with warnings', stats.toString());
-		} else {
-			gutil.log('[webpack]', stats.toString({
-				assets: true,
-				colors: true,
-				version: true,
-				modules: false,
-				hash: false,
-				timings: false,
-				chunks: true,
-				chunkModules: false,
-				reasons: true,
-				cached: true,
-				chunkOrigins: true
-			}));
-		}
-
-		done();
+		handleWebpackResult(err, stats, done);
 	});
 }
 
@@ -82,12 +126,10 @@ gulp.task('lint', function() {
 			let basePath = path.resolve(__dirname),
 				filename = e.fileName.substr(basePath.length + 1);
 
-			notifier.notify({
-				title: 'Lint error: ' + e.message,
-				message: filename + ': ' + e.lineNumber,
-				sound: true,
-				icon: path.join(__dirname, 'assets', 'icons', 'linter-error.png')
-			});
+			notify.bug(
+				'Lint error: ' + e.message,
+				filename + ': ' + e.lineNumber
+			);
 		});
 });
 
@@ -125,7 +167,7 @@ gulp.task('test', ['build-specs'], function(done) {
 
 // start development server with hot-reloading
 gulp.task('dev', ['production'], function() {
-	new WebpackDevServer(webpack(webpackConfig.dev), {
+	new WebpackDevServer(webpack(webpackConfig.dev, handleWebpackResult), {
 		publicPath: webpackConfig.dev.output.publicPath,
 		hot: true,
 		historyApiFallback: true,
