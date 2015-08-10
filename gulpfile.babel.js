@@ -1,10 +1,12 @@
 import gulp from 'gulp';
 import gutil from 'gulp-util';
-import { Server as KarmaServer } from 'karma';
-import WebpackDevServer from 'webpack-dev-server';
+import path from 'path';
 import eslint from 'gulp-eslint';
 import webserver from 'gulp-webserver';
 import webpack from 'webpack';
+import notifier from 'node-notifier';
+import WebpackDevServer from 'webpack-dev-server';
+import { Server as KarmaServer } from 'karma';
 
 // load the webpack configurations for different environments and targets
 let webpackConfig = {
@@ -75,7 +77,18 @@ gulp.task('lint', function() {
 	])
 		.pipe(eslint())
 		.pipe(eslint.format())
-		.pipe(eslint.failOnError());
+		.pipe(eslint.failOnError())
+		.on('error', function(e) {
+			let basePath = path.resolve(__dirname),
+				filename = e.fileName.substr(basePath.length + 1);
+
+			notifier.notify({
+				title: 'Lint error: ' + e.message,
+				message: filename + ': ' + e.lineNumber,
+				sound: true,
+				icon: path.join(__dirname, 'assets', 'icons', 'linter-error.png')
+			});
+		});
 });
 
 // builds the production version bundle

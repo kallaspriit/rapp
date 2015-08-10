@@ -46,3 +46,4 @@ It provides dev server with hot reload, production version generator, test frame
 - resource generators
 - testing views and components
 - API communication example
+- localization support

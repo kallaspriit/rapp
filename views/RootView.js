@@ -2,7 +2,7 @@ import React from 'react';
 import { RouteHandler } from 'react-router';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
-import * as reducers from '../build/gen/reducers';
+import * as reducers from '../build/gen/reducers'; // TODO include files in directory?
 
 // components
 import MenuComponent from './components/MenuComponent';

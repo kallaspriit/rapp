@@ -48,6 +48,7 @@
     "karma": "^0.13.6",
     "karma-jasmine": "^0.3.6",
     "karma-phantomjs-launcher": "^0.2.0",
+    "node-notifier": "^4.2.3",
     "phantomjs": "^1.9.17",
     "postcss-loader": "^0.5.1",
     "react-hot-loader": "^1.2.8",
