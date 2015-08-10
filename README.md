@@ -11,6 +11,7 @@ It provides dev server with hot reload, production version generator, test frame
 ## Gulp tasks
 - `> gulp dev` - starts the dev server on port 3000 and production server on 3001
 - `> gulp production` - starts production server on port 3001, application is rebuilt on source changes
+- `> gulp lint` - checks the codebase for errors and style guide
 - `> gulp test` - runs the test suite
 - `> gulp build` - builds the production bundle in "build/production" directory
 

@@ -1,15 +1,17 @@
-let gulp = require('gulp'),
-	gutil = require('gulp-util'),
-	KarmaServer = require('karma').Server,
-	WebpackDevServer = require('webpack-dev-server'),
-	eslint = require('gulp-eslint'),
-	webserver = require('gulp-webserver'),
-	webpack = require('webpack'),
-	webpackConfig = {
-		dev: require('./config/webpack.dev'),
-		production: require('./config/webpack.production'),
-		specs: require('./config/webpack.specs')
-	};
+import gulp from 'gulp';
+import gutil from 'gulp-util';
+import { Server as KarmaServer } from 'karma';
+import WebpackDevServer from 'webpack-dev-server';
+import eslint from 'gulp-eslint';
+import webserver from 'gulp-webserver';
+import webpack from 'webpack';
+
+// load the webpack configurations for different environments and targets
+let webpackConfig = {
+	dev: require('./config/webpack.dev'),
+	production: require('./config/webpack.production'),
+	specs: require('./config/webpack.specs')
+};
 
 // TODO generate build/gen/reducers.js
 
@@ -74,10 +76,6 @@ gulp.task('lint', function() {
 		.pipe(eslint())
 		.pipe(eslint.format())
 		.pipe(eslint.failOnError());
-});
-
-gulp.task('lint-watch', ['lint'], function() {
-	gulp.watch(sources, ['lint']);
 });
 
 // builds the production version bundle
