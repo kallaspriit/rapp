@@ -21,6 +21,7 @@ It provides dev server with hot reload, production version generator, test frame
 
 ## Development tools
 - [react-hot-loader](https://github.com/gaearon/react-hot-loader) - lets you tweak React components in real time
+- [redux-devtools](https://github.com/gaearon/redux-devtools) - enables stores time travel
 - [gulp](http://gulpjs.com/) - task automation
 - [webpack](http://webpack.github.io/) - module bundler that takes modules with dependencies and generates static assets representing those modules
 - [babel](https://babeljs.io/) - JavaScript transformer enabling ES2015 and more
@@ -34,12 +35,13 @@ It provides dev server with hot reload, production version generator, test frame
 - full source maps support
 - task automation with gulp
 - built-in dev server
+- redux dev tools including time-machine
 - hot reload for views, flux reducers (redux flux stores) and CSS
 - production version generation
-- code linting
+- code linting including react components
 - travis integration
 
 ## TODO
 - resource generators
 - testing views and components
-- redux dev tools
+- API communication example

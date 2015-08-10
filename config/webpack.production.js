@@ -63,6 +63,7 @@ module.exports = {
 		new ExtractTextPlugin('gfx/app.css', { allChunks: true }),
 		new HtmlWebpackPlugin({
 			title: 'RAPP',
+			debug: false,
 			filename: 'index.html',
 			template: 'index.template.html'
 		})

@@ -1,12 +1,9 @@
-var gulp = require('gulp'),
+let gulp = require('gulp'),
 	gutil = require('gulp-util'),
 	KarmaServer = require('karma').Server,
 	WebpackDevServer = require('webpack-dev-server'),
-	fs = require('fs'),
-	path = require('path'),
-	postcss = require('gulp-postcss'),
 	eslint = require('gulp-eslint'),
-	webserver = require('gulp-webserver')
+	webserver = require('gulp-webserver'),
 	webpack = require('webpack'),
 	webpackConfig = {
 		dev: require('./config/webpack.dev'),
@@ -16,25 +13,54 @@ var gulp = require('gulp'),
 
 // TODO generate build/gen/reducers.js
 
+// list of source file patterns to watch
+const sources = [
+	'gulpfile.js',
+	'app.js',
+	'karma.conf.js',
+	'config/**/*.js',
+	'services/**/*.js',
+	'specs/**/*.js',
+	'reducers/**/*.js',
+	'views/**/*.js',
+	'gfx/**/*.*',
+	'build/gen/**/*.js'
+];
+
 // runs webpack with given configuration
 function runWebpack(config, done) {
 	webpack(config, function(err, stats) {
-        if(err) {
+		if (err) {
 			throw new gutil.PluginError('webpack', err);
 		}
 
 		if (stats.hasErrors()) {
 			throw new gutil.PluginError('webpack', stats.toString());
 		} else if (stats.hasWarnings()) {
-			gutil.log("[webpack]", 'completed with warnings', stats.toString());
+			gutil.log('[webpack]', 'completed with warnings', stats.toString());
+		} else {
+			gutil.log('[webpack]', stats.toString({
+				assets: true,
+				colors: true,
+				version: true,
+				modules: false,
+				hash: false,
+				timings: false,
+				chunks: true,
+				chunkModules: false,
+				reasons: true,
+				cached: true,
+				chunkOrigins: true
+			}));
 		}
 
-        done();
-    });
+		done();
+	});
 }
 
 // lints the application sources
-gulp.task('lint', function(done) {
+gulp.task('lint', function() {
+
 	return gulp.src([
 		'actions/**/*.js',
 		// 'config/**/*.js', // not ES6
@@ -42,11 +68,16 @@ gulp.task('lint', function(done) {
 		'reducers/**/*.js',
 		'services/**/*.js',
 		'specs/**/*.js',
-		'views/**/*.js'
+		'views/**/*.js',
+		'gulpfile.babel.js'
 	])
-        .pipe(eslint())
-        .pipe(eslint.format())
-        .pipe(eslint.failOnError());
+		.pipe(eslint())
+		.pipe(eslint.format())
+		.pipe(eslint.failOnError());
+});
+
+gulp.task('lint-watch', ['lint'], function() {
+	gulp.watch(sources, ['lint']);
 });
 
 // builds the production version bundle
@@ -54,7 +85,7 @@ gulp.task('build', function(done) {
 	// copy gfx files
 	gulp.src(['gfx/**/*']).pipe(gulp.dest('build/production/gfx'));
 
-    runWebpack(webpackConfig.production, done);
+	runWebpack(webpackConfig.production, done);
 });
 
 // builds the development version bundle
@@ -63,17 +94,17 @@ gulp.task('build-dev', function(done) {
 	// copy gfx files
 	gulp.src(['gfx/**/*']).pipe(gulp.dest('build/dev/gfx'));
 
-    runWebpack(webpackConfig.dev, done);
+	runWebpack(webpackConfig.dev, done);
 });
 
 // builds the specs bundle
 gulp.task('build-specs', function(done) {
-    runWebpack(webpackConfig.specs, done);
+	runWebpack(webpackConfig.specs, done);
 });
 
 // run tests using Karma
-gulp.task('test', ['build-specs'], function (done) {
-	var server = new KarmaServer({
+gulp.task('test', ['build-specs'], function(done) {
+	let server = new KarmaServer({
 		configFile: __dirname + '/karma.conf.js',
 		singleRun: true
 	}, done);
@@ -87,39 +118,38 @@ gulp.task('dev', ['production'], function() {
 		publicPath: webpackConfig.dev.output.publicPath,
 		hot: true,
 		historyApiFallback: true,
+		quiet: false,
+		noInfo: false,
 		stats: {
-			colors: true
+			assets: false,
+			colors: true,
+			version: false,
+			hash: false,
+			timings: false,
+			chunks: false,
+			chunkModules: false
 		}
-	}).listen(3000, 'localhost', function (err) {
+	}).listen(3000, 'localhost', function(err) {
 			if (err) {
-				console.log(err);
+				throw err;
 			}
 
-			console.log('Listening at localhost:3000');
+			console.log('dev server started on localhost:3000'); // eslint-disable-line no-console
+
+			gulp.watch(sources, ['lint']);
 		});
 });
 
 // start the production server with file changes watcher
 gulp.task('production', ['build'], function() {
 	gulp.src('build/production')
-    	.pipe(webserver({
+		.pipe(webserver({
 			host: 'localhost',
 			port: 3001,
-			fallback: 'index.html',
+			fallback: 'index.html'
 		}));
 
-	gulp.watch([
-		'gulpfile.js',
-		'app.js',
-		'karma.conf.js',
-		'config/**/*.js',
-		'services/**/*.js',
-		'specs/**/*.js',
-		'reducers/**/*.js',
-		'views/**/*.js',
-		'gfx/**/*.*',
-		'build/gen/**/*.js'
-	], ['build']);
+	gulp.watch(sources, ['build']);
 });
 
 // default task when executing just "> gulp", lints the application and runs tests

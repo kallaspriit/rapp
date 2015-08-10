@@ -17,7 +17,7 @@ module.exports = {
 	entry: {
 		app: [
 			'webpack-dev-server/client?http://localhost:3000',
-    		'webpack/hot/only-dev-server',
+			'webpack/hot/only-dev-server',
 			'app.js'
 		]
 	},
@@ -37,22 +37,22 @@ module.exports = {
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,
-				loaders: ['react-hot', 'babel?stage=0'],
+				loaders: ['react-hot', 'babel?stage=0']
 			},
 			{
-                test:   /\.css$/,
-                loader: 'style-loader!css-loader!postcss-loader'
-            }
+				test: /\.css$/,
+				loader: 'style-loader!css-loader!postcss-loader'
+			}
 		]
 	},
 
 	// configure postcss
-	postcss: function () {
-        return [
+	postcss: function() {
+		return [
 			require('cssnext')(),
 			require('cssnano')()
 		];
-    },
+	},
 
 	// plugins setup
 	plugins: [
@@ -60,6 +60,7 @@ module.exports = {
 		new webpack.NoErrorsPlugin(),
 		new HtmlWebpackPlugin({
 			title: 'RAPP (dev)',
+			debug: true,
 			filename: 'index.html',
 			template: 'index.template.html'
 		})
@@ -67,4 +68,4 @@ module.exports = {
 
 	// generate source maps
 	devtool: 'source-map'
-}
+};
