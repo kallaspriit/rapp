@@ -1,6 +1,5 @@
-var path = require('path'),
-	webpack = require('webpack'),
-	glob = require('glob');
+import path from 'path';
+import glob from 'glob';
 
 module.exports = {
 
@@ -34,7 +33,7 @@ module.exports = {
 				exclude: /node_modules/,
 
 				// https://github.com/babel/babel-loader
-				loaders: ['babel?stage=0'],
+				loaders: ['babel?stage=0']
 			}
 		]
 	},
@@ -45,4 +44,4 @@ module.exports = {
 
 	// generate source maps
 	devtool: 'source-map'
-}
+};

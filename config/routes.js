@@ -9,6 +9,7 @@ import CounterView from '../views/CounterView';
 import NotFoundView from '../views/NotFoundView';
 
 // http://rackt.github.io/react-router/
+/* eslint-disable react/jsx-sort-props */
 export default (
 	<Route handler={RootView}>
 		<Route name="index" path="index" handler={IndexView}/>

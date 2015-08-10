@@ -1,7 +1,11 @@
-var path = require('path'),
-	webpack = require('webpack'),
-	ExtractTextPlugin = require('extract-text-webpack-plugin'),
-	HtmlWebpackPlugin = require('html-webpack-plugin');
+import path from 'path';
+import webpack from 'webpack';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import mkdirp from 'mkdirp';
+
+// create the cache directory
+mkdirp('build/cache/production');
 
 module.exports = {
 
@@ -34,27 +38,27 @@ module.exports = {
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,
-				loaders: ['babel?stage=0'],
+				loaders: ['babel?stage=0&cacheDirectory=build/cache/production']
 			},
 			{
-                test:   /\.css$/,
+				test: /\.css$/,
 				loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader')
-            }
+			}
 		]
 	},
 
 	// configure postcss
-	postcss: function () {
-        return [
+	postcss: function() {
+		return [
 			require('cssnext')(),
 			require('cssnano')()
 		];
-    },
+	},
 
 	// plugins setup
 	plugins: [
 		new webpack.optimize.OccurenceOrderPlugin(),
-    	new webpack.NoErrorsPlugin(),
+		new webpack.NoErrorsPlugin(),
 		new webpack.optimize.UglifyJsPlugin({
 			compressor: {
 				warnings: false
@@ -68,4 +72,4 @@ module.exports = {
 			template: 'index.template.html'
 		})
 	]
-}
+};

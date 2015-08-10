@@ -60,11 +60,7 @@ function handleWebpackResult(err, stats, done) {
 			'Webpack error occured',
 			'See the console for details'
 		);
-
-		throw new gutil.PluginError('webpack', err);
-	}
-
-	if (stats.hasErrors()) {
+	} else if (stats.hasErrors()) {
 		notify.error(
 			'Webpack failed to build the application',
 			'See the console for details'
@@ -111,7 +107,7 @@ gulp.task('lint', function() {
 
 	return gulp.src([
 		'actions/**/*.js',
-		// 'config/**/*.js', // not ES6
+		'config/**/*.js',
 		'constants/**/*.js',
 		'reducers/**/*.js',
 		'services/**/*.js',

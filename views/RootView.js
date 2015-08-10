@@ -65,7 +65,7 @@ export default class RootView extends React.Component {
 	render() {
 		return (
 			<div>
-				<h1>RAPP - The React Application Framework!</h1>
+				<h1>RAPP - The React Application Framework</h1>
 				<MenuComponent/>
 				<Provider store={store}>
 					{() => <RouteHandler {...this.props}/>}

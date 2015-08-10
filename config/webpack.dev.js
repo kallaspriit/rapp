@@ -1,6 +1,10 @@
-var path = require('path'),
-	webpack = require('webpack'),
-	HtmlWebpackPlugin = require('html-webpack-plugin');
+import path from 'path';
+import webpack from 'webpack';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import mkdirp from 'mkdirp';
+
+// create the cache directory
+mkdirp('build/cache/dev');
 
 module.exports = {
 
@@ -37,7 +41,7 @@ module.exports = {
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,
-				loaders: ['react-hot', 'babel?stage=0']
+				loaders: ['react-hot', 'babel?stage=0&cacheDirectory=build/cache/dev']
 			},
 			{
 				test: /\.css$/,

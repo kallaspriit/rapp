@@ -48,3 +48,6 @@ It provides dev server with hot reload, production version generator, test frame
 - testing views and components
 - API communication example
 - localization support
+- dev server should survive errors
+- show broken component in red
+- integrate time machine
