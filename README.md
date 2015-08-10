@@ -37,9 +37,9 @@ It provides dev server with hot reload, production version generator, test frame
 - hot reload for views, flux reducers (redux flux stores) and CSS
 - production version generation
 - code linting
+- travis integration
 
 ## TODO
 - resource generators
-- travis integration
 - testing views and components
 - redux dev tools
