@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 
 export default React.createClass({
 
@@ -9,7 +9,7 @@ export default React.createClass({
 				<li><Link to="index">Index</Link></li>
 				<li><Link to="about">About</Link></li>
 				<li><Link to="counter">Redux counter example</Link></li>
-				<li><a href="#/xxx">Invalid link</a></li>
+				<li><a href="/xxx">Invalid link</a></li>
 			</ul>
 		);
 	}

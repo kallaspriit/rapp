@@ -1,4 +1,3 @@
-import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as CounterActions from '../actions/counter-actions';
@@ -17,10 +16,10 @@ export default class CounterView {
 			<div>
 				<CounterComponent
 					counter={counter}
-               		{...bindActionCreators(CounterActions, dispatch)}
+					{...bindActionCreators(CounterActions, dispatch)}
 				/>
 			</div>
 		);
 	}
 
-};
+}

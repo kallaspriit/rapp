@@ -5,12 +5,12 @@ It provides dev server with hot reload, production version generator, test frame
 
 ## Getting started
 - `> npm install` - installs all the libraries dependencies
-- `> gulp dev` - starts the dev server on port 3000
+- `> gulp dev` - starts the dev server on port 3000 and production server on 3001
 - open [http://localhost:3000](http://localhost:3000/)
 
 ## Gulp tasks
 - `> gulp dev` - starts the dev server on port 3000 and production server on 3001
-- `> gulp production` - starts production server on 3001, application is rebuilt on file changes
+- `> gulp production` - starts production server on port 3001, application is rebuilt on source changes
 - `> gulp test` - runs the test suite
 - `> gulp build` - builds the production bundle in "build/production" directory
 
@@ -36,10 +36,10 @@ It provides dev server with hot reload, production version generator, test frame
 - built-in dev server
 - hot reload for views, flux reducers (redux flux stores) and CSS
 - production version generation
+- code linting
 
 ## TODO
 - resource generators
-- gulp run eslint
 - travis integration
 - testing views and components
 - redux dev tools

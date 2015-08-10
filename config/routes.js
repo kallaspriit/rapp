@@ -1,5 +1,4 @@
-import React from 'react';
-import {Route, NotFoundRoute, DefaultRoute} from 'react-router';
+import { Route, NotFoundRoute, DefaultRoute } from 'react-router';
 
 import RootView from '../views/RootView';
 import IndexView from '../views/IndexView';

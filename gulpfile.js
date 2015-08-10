@@ -5,6 +5,7 @@ var gulp = require('gulp'),
 	fs = require('fs'),
 	path = require('path'),
 	postcss = require('gulp-postcss'),
+	eslint = require('gulp-eslint'),
 	webserver = require('gulp-webserver')
 	webpack = require('webpack'),
 	webpackConfig = {
@@ -31,6 +32,22 @@ function runWebpack(config, done) {
         done();
     });
 }
+
+// lints the application sources
+gulp.task('lint', function(done) {
+	return gulp.src([
+		'actions/**/*.js',
+		// 'config/**/*.js', // not ES6
+		'constants/**/*.js',
+		'reducers/**/*.js',
+		'services/**/*.js',
+		'specs/**/*.js',
+		'views/**/*.js'
+	])
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failOnError());
+});
 
 // builds the production version bundle
 gulp.task('build', function(done) {
@@ -105,5 +122,5 @@ gulp.task('production', ['build'], function() {
 	], ['build']);
 });
 
-// default task when executing just "> gulp", builds the application and runs tests
-gulp.task('default', ['build', 'test']);
+// default task when executing just "> gulp", lints the application and runs tests
+gulp.task('default', ['lint', 'test']);
