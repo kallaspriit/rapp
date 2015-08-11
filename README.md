@@ -30,6 +30,7 @@ It provides dev server with hot reload, production version generator, test frame
 - [karma](http://karma-runner.github.io/0.13/index.html) - spectacular test runner
 - [jasmine](http://jasmine.github.io/) - behavior-driven development framework for testing JavaScript code
 - [eslint](http://eslint.org/) - provides pluggable linting utility for JavaScript
+- [node-notifier](https://github.com/mikaelbr/node-notifier) - shows native desktop events on build/linting errors etc
 
 ## Features
 - write your code in ES2015

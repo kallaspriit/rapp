@@ -21,7 +21,8 @@ if (window.debug) {
 
 	DevTools = ReduxReactTools.DevTools;
 	DebugPanel = ReduxReactTools.DebugPanel;
-	LogMonitor = ReduxReactTools.LogMonitor;
+	// LogMonitor = ReduxReactTools.LogMonitor;
+	LogMonitor = require('redux-slider-monitor');
 
 	finalCreateStore = compose(
 		applyMiddleware(thunk),
@@ -45,8 +46,8 @@ if (window.debug) {
 	debugPanel = (
 		<DebugPanel
 			bottom
+			left
 			right
-			top
 		>
 			<DevTools
 				monitor={LogMonitor}
