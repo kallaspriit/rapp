@@ -37,6 +37,7 @@ It provides dev server with hot reload, production version generator, test frame
 - full source maps support
 - task automation with gulp
 - built-in dev server
+- localization support
 - development issues such as linter errors are shown as desktop notifications
 - redux dev tools including time-machine
 - hot reload for views, flux reducers (redux flux stores) and CSS
@@ -48,11 +49,11 @@ It provides dev server with hot reload, production version generator, test frame
 - jsx class autobinding
 - reducer helper
 - autobinding actions
+- logger
 - make constants types once
 - testing views and components
 - start production server after dev server is running
 - API communication example
-- localization support
 - dev server should survive errors
 - show broken component in red
 - reducers, views, decorators index file generator

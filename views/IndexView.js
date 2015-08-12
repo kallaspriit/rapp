@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default React.createClass({
+export default class IndexView extends React.Component {
 
 	render() {
 		return (
@@ -11,4 +11,4 @@ export default React.createClass({
 		);
 	}
 
-});
+}

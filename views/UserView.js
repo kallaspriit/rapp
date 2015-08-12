@@ -22,12 +22,12 @@ export default class UserView extends React.Component {
 	};
 	*/
 
-	handlePoke = () => {
-		console.log('poke');
+	handleNavigateIndex = () => {
+		this.props.dispatch(transitionTo('/index'));
 	}
 
-	handleNavigateIndex() {
-		this.props.dispatch(transitionTo('/index'));
+	handleLoad = () => {
+		this.props.dispatch(this.props.actions.user.fetchUser(10));
 	}
 
 	render() {
@@ -50,8 +50,8 @@ export default class UserView extends React.Component {
 		return (
 			<div>
 				USER {user.info.id} {user.info.name} {user.isLoggedIn ? 'logged in' : 'logged out'}
-				<button onClick={this.handlePoke}>Poke</button>
-				<button onClick={this.handleNavigateIndex.bind(this)}>Go to index</button>
+				<button onClick={this.handleNavigateIndex}>Go to index</button>
+				<button onClick={this.handleLoad}>Load user #10</button>
 			</div>
 		);
 	}

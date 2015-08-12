@@ -6,6 +6,7 @@ import IndexView from '../views/IndexView';
 import AboutView from '../views/AboutView';
 import CounterView from '../views/CounterView';
 import UserView from '../views/UserView';
+import TranslatorView from '../views/TranslatorView';
 import NotFoundView from '../views/NotFoundView';
 
 // http://rackt.github.io/react-router/
@@ -17,6 +18,7 @@ export default (
 		<Route name="about" path="/about" component={AboutView}/>
 		<Route name="counter" path="/counter" component={CounterView}/>
 		<Route name="user" path="/user/:id" component={UserView}/>
+		<Route name="translator" path="/translator" component={TranslatorView}/>
 		<Route name="default" path="*" component={NotFoundView}/>
 	</Route>
 );

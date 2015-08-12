@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default React.createClass({
+export default class NotFoundView extends React.Component {
 
 	render() {
 		return (
@@ -10,4 +10,4 @@ export default React.createClass({
 		);
 	}
 
-});
+}

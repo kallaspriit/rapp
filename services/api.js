@@ -21,7 +21,7 @@ export default {
 					log('loading user #' + id + ' failed');
 
 					reject({
-						message: 'Simulated error'
+						message: 'api simulates failing requests 25% of the times, try again'
 					});
 				}
 			}, 2000);

@@ -21,6 +21,7 @@ const sources = [
 	'app.js',
 	'karma.conf.js',
 	'config/**/*.js',
+	'src/**/*.js',
 	'services/**/*.js',
 	'specs/**/*.js',
 	'reducers/**/*.js',
@@ -162,7 +163,7 @@ gulp.task('test', ['build-specs'], function(done) {
 
 // start development server with hot-reloading
 // TODO run production server once dev server is running
-gulp.task('dev', ['production'], function() {
+gulp.task('dev', function() {
 	new WebpackDevServer(webpack(webpackConfig.dev, handleWebpackResult), {
 		publicPath: webpackConfig.dev.output.publicPath,
 		hot: true,
@@ -185,6 +186,7 @@ gulp.task('dev', ['production'], function() {
 
 			console.log('dev server started on localhost:3000'); // eslint-disable-line no-console
 
+			gulp.run('production');
 			gulp.watch(sources, ['lint']);
 		});
 });

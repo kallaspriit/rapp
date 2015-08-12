@@ -14,7 +14,10 @@ module.exports = {
 
 	// entry points for the bundle
 	entry: {
-		specs: glob.sync('specs/**/*.js')
+		specs: glob.sync('specs/**/*.js'),
+		polyfill: [
+			'es5-shim'
+		]
 	},
 
 	// bundle output
