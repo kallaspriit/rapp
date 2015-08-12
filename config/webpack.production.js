@@ -38,7 +38,7 @@ module.exports = {
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,
-				loaders: ['babel?stage=0&cacheDirectory=build/cache/production']
+				loaders: ['babel?stage=0&cacheDirectory=build/cache/production&optional[]=runtime']
 			},
 			{
 				test: /\.css$/,

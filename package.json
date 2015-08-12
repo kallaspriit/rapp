@@ -21,16 +21,20 @@
   },
   "homepage": "https://github.com/kallaspriit/rapp#readme",
   "dependencies": {
-    "react": "^0.13.3",
+    "bluebird": "^2.9.34",
+    "react": "^0.14.0-beta1",
     "react-redux": "^0.2.2",
-    "react-router": "^0.13.3",
-    "redux": "^1.0.0-rc"
+    "react-router": "^1.0.0-beta3",
+    "redux": "^1.0.0-rc",
+    "redux-batched-updates": "^0.1.0",
+    "redux-react-router": "^0.2.1"
   },
   "devDependencies": {
     "babel": "^5.8.20",
     "babel-core": "^5.8.20",
     "babel-eslint": "^4.0.5",
     "babel-loader": "^5.3.2",
+    "babel-runtime": "^5.8.20",
     "css-loader": "^0.15.6",
     "cssnano": "^2.1.1",
     "cssnext": "^1.8.3",

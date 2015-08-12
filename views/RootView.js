@@ -1,16 +1,25 @@
 import React from 'react';
-import { RouteHandler } from 'react-router';
-import { Provider } from 'react-redux';
+import { Connector } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
-import * as reducers from '../build/gen/reducers'; // TODO include files in directory?
+import { routerStateReducer } from 'redux-react-router';
+import { batchedUpdates } from 'redux-batched-updates';
+import * as reducers from '../reducers';
 
 // components
 import MenuComponent from './components/MenuComponent';
 
 // redux dev tools support https://github.com/gaearon/redux-devtools
-let finalCreateStore;
 let DebugPanel, DevTools, LogMonitor;
 let debugPanel = null;
+
+// setup the combined reducer and store, also export them
+export const reducer = combineReducers({
+	router: routerStateReducer,
+	...reducers
+});
+
+export let store = null;
+// export const store = batchedUpdates(createStore)(reducer);
 
 // only setup dev tools in debug mode (defined by webpack config)
 if (window.debug) {
@@ -24,22 +33,18 @@ if (window.debug) {
 	// LogMonitor = ReduxReactTools.LogMonitor;
 	LogMonitor = require('redux-slider-monitor');
 
-	finalCreateStore = compose(
+	store = batchedUpdates(compose(
 		applyMiddleware(thunk),
 		devTools(),
 		persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)),
 		createStore
-	);
+	))(reducer);
 
 	// enable React dev-tools
 	window.React = React;
 } else {
-	finalCreateStore = createStore;
+	store = batchedUpdates(createStore)(reducer);
 }
-
-// setup the combined reducer and store
-const reducer = combineReducers(reducers);
-const store = finalCreateStore(reducer);
 
 // create debug panel in debug mode
 if (window.debug) {
@@ -63,14 +68,21 @@ if (window.debug) {
 // https://github.com/gaearon/redux
 export default class RootView extends React.Component {
 
+	static propTypes = {
+		children: React.PropTypes.object.isRequired
+	};
+
 	render() {
 		return (
 			<div>
-				<h1>RAPP - The React Application Framework</h1>
-				<MenuComponent/>
-				<Provider store={store}>
-					{() => <RouteHandler {...this.props}/>}
-				</Provider>
+				<Connector select={s => s}>{({ router }) => (
+					<div>
+						<h1>RAPP - The React Application Framework</h1>
+						<MenuComponent/>
+						{this.props.children}
+						<p>Location: {JSON.stringify(router)}</p>
+					</div>
+				)}</Connector>
 				{debugPanel}
 			</div>
 		);

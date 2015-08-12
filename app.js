@@ -1,36 +1,55 @@
 import React from 'react';
-import Router from 'react-router';
-
+import ReactDOM from 'react-dom';
+import { Router, Route } from 'react-router';
+import { reduxRouteComponent } from 'redux-react-router';
+import { history } from 'react-router/lib/BrowserHistory';
+import { store } from './views/RootView';
 import routes from './config/routes';
-import log from './services/Log';
+import log from './services/log';
+import css from './gfx/app.css'; // eslint-disable-line no-unused-vars
 
-import css from './gfx/app.css';
+import * as actions from './actions';
 
-// setup react router
-let router = Router.create({
-	routes: routes,
-	//location: Router.HashLocation
-	location: Router.HistoryLocation
-})
+log('bootstrapping', routes, actions);
 
-// run the application
-router.run((Root, state) => {
-	let routesWithData = state.routes.filter((route) => route.handler.fetchData),
-		promises = routesWithData.reduce((promises, route) => {
-			promises.push(route.handler.fetchData(state.params));
+/*
+function onUpdate() {
+	log('router updated');
+}
 
-			return promises;
-		}, []);
+function createElement(Component, props) {
+	log('create element', Component, props);
 
-	log('matched route', state, promises);
+	if (typeof props.route.component.fetchData === 'function') {
+		log('has data');
 
-	// render the view in loading state if there is data to fetch
-	if (promises.length > 0) {
-		React.render(<Root data={null} loading={true}/>, document.getElementById('app'));
+		props.route.component.fetchData(props.params).then(() => {
+			log('all data loaded');
+		});
+
+		return (
+			<Component {...props} loading={true}/>
+		);
 	}
 
-	// TODO handle aborting loading data if view is changed before data is loaded
-	Promise.all(promises).then((data) => {
-		React.render(<Root data={data} loading={false}/>, document.getElementById('app'));
-	})
-});
+	return (
+		<Component {...props} loading={false}/>
+	);
+}
+<Router history={history} onUpdate={onUpdate} createElement={createElement}>
+*/
+
+function createElement(Component, props) {
+	return (
+		<Component {...props} actions={actions}/>
+	);
+}
+
+// bootstrap the application
+ReactDOM.render((
+	<Router createElement={createElement} history={history}>
+		<Route component={reduxRouteComponent(store)}>
+			{routes}
+		</Route>
+	</Router>
+), document.getElementById('app'));

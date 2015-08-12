@@ -15,8 +15,6 @@ let webpackConfig = {
 	specs: require('./config/webpack.specs')
 };
 
-// TODO generate build/gen/reducers.js
-
 // list of source file patterns to watch
 const sources = [
 	'gulpfile.js',
@@ -106,6 +104,7 @@ function runWebpack(config, done) {
 gulp.task('lint', function() {
 
 	return gulp.src([
+		'app.js',
 		'actions/**/*.js',
 		'config/**/*.js',
 		'constants/**/*.js',
@@ -162,6 +161,7 @@ gulp.task('test', ['build-specs'], function(done) {
 });
 
 // start development server with hot-reloading
+// TODO run production server once dev server is running
 gulp.task('dev', ['production'], function() {
 	new WebpackDevServer(webpack(webpackConfig.dev, handleWebpackResult), {
 		publicPath: webpackConfig.dev.output.publicPath,

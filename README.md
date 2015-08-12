@@ -45,10 +45,12 @@ It provides dev server with hot reload, production version generator, test frame
 - travis integration
 
 ## TODO
-- resource generators
+- jsx class autobinding
 - testing views and components
+- start production server after dev server is running
 - API communication example
 - localization support
 - dev server should survive errors
 - show broken component in red
-- integrate time machine
+- reducers, views, decorators index file generator
+- resource generators
