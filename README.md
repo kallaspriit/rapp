@@ -46,6 +46,9 @@ It provides dev server with hot reload, production version generator, test frame
 
 ## TODO
 - jsx class autobinding
+- reducer helper
+- autobinding actions
+- make constants types once
 - testing views and components
 - start production server after dev server is running
 - API communication example

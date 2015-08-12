@@ -46,7 +46,7 @@ function shallowEqualScalar(objA, objB) {
 	return true;
 }
 
-export default function fetchOnUpdate(paramKeys, fn) {
+export default function listen(paramKeys, fn) {
 
 	return DecoratedComponent =>
 		class FetchOnUpdateDecorator extends React.Component {
@@ -57,7 +57,10 @@ export default function fetchOnUpdate(paramKeys, fn) {
 
 			componentWillMount() {
 				for (let actionNamespace in this.props.actions) {
-					if (!this.props.actions.hasOwnProperty(actionNamespace)) {
+					if (
+						!this.props.actions.hasOwnProperty(actionNamespace)
+						|| this.props.actions[actionNamespace]._autobinded
+					) {
 						continue;
 					}
 
@@ -65,6 +68,9 @@ export default function fetchOnUpdate(paramKeys, fn) {
 						this.props.actions[actionNamespace],
 						this.props.dispatch
 					);
+
+					// bind once
+					this.props.actions[actionNamespace]._autobinded = true;
 				}
 
 				fn(mapParams(paramKeys, this.props.params), this.props.actions);

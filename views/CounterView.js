@@ -15,8 +15,8 @@ export default class CounterView extends React.Component {
 		dispatch: PropTypes.func.isRequired
 	};
 
-	handleTest() {
-		this.props.actions.counter.increment();
+	handleTest = () => {
+		this.props.dispatch(this.props.actions.counter.increment());
 	}
 
 	render() {

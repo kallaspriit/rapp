@@ -1,16 +1,13 @@
 import React from 'react';
 import { Connector } from 'react-redux';
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { routerStateReducer } from 'redux-react-router';
 import { batchedUpdates } from 'redux-batched-updates';
+import thunk from 'redux-thunk';
 import * as reducers from '../reducers';
 
 // components
 import MenuComponent from './components/MenuComponent';
-
-// redux dev tools support https://github.com/gaearon/redux-devtools
-let DebugPanel, DevTools, LogMonitor;
-let debugPanel = null;
 
 // setup the combined reducer and store, also export them
 export const reducer = combineReducers({
@@ -18,14 +15,14 @@ export const reducer = combineReducers({
 	...reducers
 });
 
+// redux dev tools support https://github.com/gaearon/redux-devtools
+let DebugPanel, DevTools, LogMonitor;
+let debugPanel = null;
 export let store = null;
-// export const store = batchedUpdates(createStore)(reducer);
 
 // only setup dev tools in debug mode (defined by webpack config)
 if (window.debug) {
 	const { devTools, persistState } = require('redux-devtools');
-	const { applyMiddleware, compose } = require('redux');
-	const thunk = require('redux-thunk');
 	const ReduxReactTools = require('redux-devtools/lib/react');
 
 	DevTools = ReduxReactTools.DevTools;
@@ -40,10 +37,13 @@ if (window.debug) {
 		createStore
 	))(reducer);
 
-	// enable React dev-tools
+	// enable react dev-tools
 	window.React = React;
 } else {
-	store = batchedUpdates(createStore)(reducer);
+	store = batchedUpdates(compose(
+		applyMiddleware(thunk),
+		createStore
+	))(reducer);
 }
 
 // create debug panel in debug mode

@@ -1,8 +1,8 @@
 import * as constants from '../constants/actions';
-import log from '../services/log';
 
 const initialState = {
 	loading: false,
+	error: null,
 	info: {
 		id: null,
 		name: 'n/a'
@@ -11,8 +11,9 @@ const initialState = {
 };
 
 const actions = {
-	[constants.FETCHING_USER]: (state, action) => ({ loading: action.id }),
-	[constants.FETCHED_USER]: (state, action) => ({ info: action.user, loading: false })
+	[constants.FETCH_USER]: (state, action) => ({ loading: action.id, error: null }),
+	[constants.FETCH_USER_DONE]: (state, action) => ({ info: action.user, loading: false, error: null }),
+	[constants.FETCH_USER_FAIL]: (state, action) => ({ loading: false, error: action.error })
 };
 
 export default function user(state = initialState, action) {
@@ -21,10 +22,6 @@ export default function user(state = initialState, action) {
 	if (!reducer) {
 		return state;
 	}
-
-	const newState = reducer(state, action);
-
-	log('reduced', action, newState, state);
 
 	return { ...state, ...reducer(state, action) };
 }

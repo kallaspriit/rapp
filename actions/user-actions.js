@@ -5,15 +5,24 @@ export function fetchUser(id) {
 
 	return dispatch => {
 		dispatch({
-			type: actions.FETCHING_USER,
+			type: actions.FETCH_USER,
 			id: id
 		});
 
 		api.fetchUser(id)
-			.then(user => dispatch({
-				type: actions.FETCHED_USER,
-				user: user
-			}));
+			.then(user =>
+				dispatch({
+					type: actions.FETCH_USER_DONE,
+					user: user
+				})
+			)
+			.catch(error =>
+				dispatch({
+					type: actions.FETCH_USER_FAIL,
+					error: error
+				})
+			)
+			.done();
 	};
 
 }

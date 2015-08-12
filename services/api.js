@@ -6,14 +6,24 @@ export default {
 	fetchUser(id) {
 		log('loading user #' + id);
 
-		return new Promise((resolve) => {
+		return new Promise((resolve, reject) => {
 			setTimeout(() => {
-				log('data loaded', id);
 
-				resolve({
-					id: id,
-					name: 'User #' + id
-				});
+				// fail half of the times..
+				if (Math.random() > 0.25) {
+					log('user #' + id + ' loaded');
+
+					resolve({
+						id: id,
+						name: 'User #' + id
+					});
+				} else {
+					log('loading user #' + id + ' failed');
+
+					reject({
+						message: 'Simulated error'
+					});
+				}
 			}, 2000);
 		});
 	}
