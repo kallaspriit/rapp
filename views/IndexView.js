@@ -6,7 +6,7 @@ export default class IndexView extends React.Component {
 		return (
 			<div>
 				Index
-				<img src="gfx/react-logo.png"/>
+				<img src="gfx/react-logo.png" width="400"/>
 			</div>
 		);
 	}

@@ -75,12 +75,11 @@ export default class RootView extends React.Component {
 	render() {
 		return (
 			<div>
-				<Connector select={s => s}>{({ router }) => (
+				<Connector select={s => s}>{(/* { router } */) => (
 					<div>
 						<h1>RAPP - The React Application Framework</h1>
 						<MenuComponent/>
 						{this.props.children}
-						<p>Location: {JSON.stringify(router)}</p>
 					</div>
 				)}</Connector>
 				{debugPanel}
