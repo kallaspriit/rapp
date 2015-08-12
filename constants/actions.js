@@ -1,8 +1,14 @@
-// counter
-export const INCREMENT_COUNTER = 'INCREMENT_COUNTER';
-export const DECREMENT_COUNTER = 'DECREMENT_COUNTER';
+import { keyMirror } from '../services/util';
 
-// users
-export const FETCH_USER = 'FETCH_USER';
-export const FETCH_USER_DONE = 'FETCH_USER_DONE';
-export const FETCH_USER_FAIL = 'FETCH_USER_FAIL';
+export default keyMirror({
+
+	// counter
+	INCREMENT_COUNTER: null,
+	DECREMENT_COUNTER: null,
+
+	// users
+	FETCH_USER: null,
+	FETCH_USER_DONE: null,
+	FETCH_USER_FAIL: null
+
+});

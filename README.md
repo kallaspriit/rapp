@@ -44,16 +44,11 @@ It provides dev server with hot reload, production version generator, test frame
 - production version generation
 - code linting including react components
 - travis integration
+- helper for writing map-based reducers
 
 ## TODO
-- jsx class autobinding
-- reducer helper
-- autobinding actions
-- logger
 - make constants types once
 - testing views and components
-- start production server after dev server is running
-- API communication example
 - dev server should survive errors
 - show broken component in red
 - reducers, views, decorators index file generator

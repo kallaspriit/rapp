@@ -1,16 +1,10 @@
-import { INCREMENT_COUNTER, DECREMENT_COUNTER } from '../constants/actions';
+import constants from '../constants/actions';
+import reducer from '../services/reducer';
 
-export default function counter(state = 0, action) {
-
-	switch (action.type) {
-		case INCREMENT_COUNTER:
-			return state + 1;
-
-		case DECREMENT_COUNTER:
-			return state - 1;
-
-		default:
-			return state;
+export default reducer(
+	0,
+	{
+		[constants.INCREMENT_COUNTER]: (state/* , action */) => state + 1,
+		[constants.DECREMENT_COUNTER]: (state/* , action */) => state - 1
 	}
-
-}
+);
