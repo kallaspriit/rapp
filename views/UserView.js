@@ -13,7 +13,8 @@ export default class UserView extends React.Component {
 
 	static propTypes = {
 		user: PropTypes.object.isRequired,
-		dispatch: PropTypes.func.isRequired
+		dispatch: PropTypes.func.isRequired,
+		actions: PropTypes.object.isRequired
 	};
 
 	/*

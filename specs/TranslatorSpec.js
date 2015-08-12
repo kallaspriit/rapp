@@ -17,8 +17,6 @@ describe('Translator', function() {
 		};
 
 		translator = new Translator(translations, 'en');
-
-		console.log('translator', translator);
 	});
 
 	it('should translate simple simple strings', function() {
