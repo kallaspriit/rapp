@@ -57,7 +57,7 @@
     "node-notifier": "^4.2.3",
     "phantomjs": "^1.9.17",
     "postcss-loader": "^0.5.1",
-    "react-dom": "^0.1.0",
+    "react-dom": "^0.14.0-beta3",
     "react-hot-loader": "^1.2.8",
     "redux-devtools": "^0.2.0",
     "redux-slider-monitor": "^0.2.0",
