@@ -3,26 +3,23 @@ import log from './log';
 
 export default {
 
-	fetchUser(id) {
-		log('loading user #' + id);
+	fetchUser(info) {
+		log('loading user #' + info.id);
 
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
 
 				// fail half of the times..
 				if (Math.random() > 0.25) {
-					log('user #' + id + ' loaded');
+					log('user #' + info.id + ' loaded');
 
 					resolve({
-						id: id,
-						name: 'User #' + id
+						name: 'User #' + info.id
 					});
 				} else {
-					log('loading user #' + id + ' failed');
+					log('loading user #' + info.id + ' failed');
 
-					reject({
-						message: 'api simulates failing requests 25% of the times, try again'
-					});
+					reject('api simulates failing requests 25% of the times, try again');
 				}
 			}, 2000);
 		});

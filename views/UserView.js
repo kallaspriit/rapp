@@ -7,7 +7,7 @@ import listen from '../decorators/listen';
 	user: state.user
 }))
 @listen(['id'], (params, actions) => {
-	actions.user.fetchUser(params.id);
+	actions.user.fetchUser(Number.parseInt(params.id, 10));
 })
 export default class UserView extends React.Component {
 
@@ -37,7 +37,7 @@ export default class UserView extends React.Component {
 		if (user.loading) {
 			return (
 				<div>
-					Loading...
+					Loading user #{user.info.id}...
 				</div>
 			);
 		} else if (user.error) {

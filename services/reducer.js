@@ -1,3 +1,26 @@
+/**
+ * Extracts defaults response information such as loading state and error from the response.
+ *
+ * @param {function} extractor User state reducer
+ * @returns {function}
+ */
+export function extract(extractor) {
+	return (state, action) => {
+		return ({
+			loading: typeof action.loading === 'boolean' ? action.loading : false,
+			error: action.error || null,
+			...extractor(state, action)
+		});
+	};
+}
+
+/**
+ * Helper for creating a reducer with initial state and map of actions.
+ *
+ * @param {*} initialState Initial state
+ * @param {object} actions Map of actions to reducers
+ * @returns {function}
+ */
 export default function reducer(initialState, actions) {
 
 	// make sure the keys are valid
@@ -13,17 +36,17 @@ export default function reducer(initialState, actions) {
 
 	// return the reducer function
 	return (state = initialState, action) => {
-		const reducer = actions[action.type];
+		const actionFn = actions[action.type];
 
-		if (!reducer) {
+		if (!actionFn) {
 			return state;
 		}
 
 		if (typeof state === 'object' && state !== null) {
-			return { ...state, ...reducer(state, action) };
+			return { ...state, ...extract(actionFn)(state, action) };
 		}
 
-		return reducer(state, action);
+		return actionFn(state, action);
 	};
 
 }

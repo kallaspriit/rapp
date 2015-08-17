@@ -1,28 +1,24 @@
 import api from '../services/api';
 import * as actions from '../constants/actions';
+import { start, success, error } from '../services/actions';
 
-export function fetchUser(id) {
+let apix = {
 
-	return dispatch => {
-		dispatch({
-			type: actions.FETCH_USER,
-			id: id
-		});
+	fetchUser(dispatch, info) {
+		dispatch(start(actions.FETCH_USER, info));
 
-		api.fetchUser(id)
-			.then(user =>
-				dispatch({
-					type: actions.FETCH_USER_DONE,
-					user: user
-				})
+		api.fetchUser(info)
+			.then(response =>
+				dispatch(success(actions.FETCH_USER, { ...info, ...response }))
 			)
-			.catch(error =>
-				dispatch({
-					type: actions.FETCH_USER_FAIL,
-					error: error
-				})
+			.catch(message =>
+				dispatch(error(actions.FETCH_USER, message, info))
 			)
 			.done();
-	};
+	}
 
+};
+
+export function fetchUser(id) {
+	return dispatch => apix.fetchUser(dispatch, { id });
 }
