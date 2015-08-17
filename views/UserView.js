@@ -7,7 +7,7 @@ import listen from '../decorators/listen';
 	user: state.user
 }))
 @listen(['id'], (params, actions) => {
-	actions.user.fetchUser(Number.parseInt(params.id, 10));
+	actions.api.fetchUser({ id: Number.parseInt(params.id, 10) });
 })
 export default class UserView extends React.Component {
 
@@ -28,7 +28,7 @@ export default class UserView extends React.Component {
 	}
 
 	handleLoad = () => {
-		this.props.dispatch(this.props.actions.user.fetchUser(10));
+		this.props.dispatch(this.props.actions.api.fetchUser({ id: 10 }));
 	}
 
 	render() {
@@ -50,9 +50,13 @@ export default class UserView extends React.Component {
 
 		return (
 			<div>
-				USER {user.info.id} {user.info.name} {user.isLoggedIn ? 'logged in' : 'logged out'}
-				<button onClick={this.handleNavigateIndex}>Go to index</button>
-				<button onClick={this.handleLoad}>Load user #10</button>
+				<p>
+					{user.info.name}
+				</p>
+				<p>
+					<button onClick={this.handleNavigateIndex}>Go to index</button>
+					<button onClick={this.handleLoad}>Load user #10</button>
+				</p>
 			</div>
 		);
 	}

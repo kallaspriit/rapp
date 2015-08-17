@@ -23,6 +23,12 @@ export function extract(extractor) {
  */
 export default function reducer(initialState, actions) {
 
+	// add some extra default inital state for objects
+	if (typeof initialState === 'object' && initialState !== null) {
+		initialState.loading = false;
+		initialState.error = null;
+	}
+
 	// make sure the keys are valid
 	for (let key in actions) {
 		if (!actions.hasOwnProperty(key)) {

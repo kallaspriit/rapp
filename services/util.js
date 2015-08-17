@@ -11,3 +11,17 @@ export function keyMirror(obj) {
 
 	return ret;
 }
+
+export function convertMixedCaseToConstant(str) {
+	let result = '';
+
+	for (let char of str) {
+		if (char.toLowerCase() !== char) {
+			result += '_';
+		}
+
+		result += char.toUpperCase();
+	}
+
+	return result;
+}

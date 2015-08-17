@@ -1,7 +1,7 @@
 import * as counter from './counter-actions';
-import * as user from './user-actions';
+import * as api from './api-actions';
 
 export {
 	counter,
-	user
+	api
 };
