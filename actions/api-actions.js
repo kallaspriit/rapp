@@ -24,14 +24,21 @@ for (let method in api) {
 	dispatchableApi[method] = (dispatch, info) => {
 		dispatch(start(actions[actionName], info));
 
+		const startTime = (new Date()).getTime();
+
 		api.fetchUser(info)
-			.then(response =>
-				dispatch(success(actions[actionName], { ...info, ...response }))
-			)
-			.catch(message =>
-				dispatch(error(actions[actionName], message, info))
-			)
-			.done();
+			.then(response => {
+				const timeTaken = (new Date()).getTime() - startTime;
+
+				log('got response for API request "' + method + '" in ' + timeTaken + 'ms', response);
+
+				dispatch(success(actions[actionName], { ...info, ...response.data }));
+			})
+			.catch(response => {
+				log.warn('failed API request "' + method + '"', response);
+
+				dispatch(error(actions[actionName], response.statusText, info));
+			});
 	};
 
 	apiActions[method] = (info) => (dispatch) => dispatchableApi[method](dispatch, info);

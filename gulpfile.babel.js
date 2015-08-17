@@ -131,8 +131,9 @@ gulp.task('lint', function() {
 
 // builds the production version bundle
 gulp.task('build', function(done) {
-	// copy gfx files
+	// copy static files
 	gulp.src(['gfx/**/*']).pipe(gulp.dest('build/production/gfx'));
+	gulp.src(['data/**/*']).pipe(gulp.dest('build/production/data'));
 
 	runWebpack(webpackConfig.production, done);
 });
