@@ -186,7 +186,7 @@ gulp.task('dev', function() {
 
 			console.log('dev server started on localhost:3000'); // eslint-disable-line no-console
 
-			gulp.run('production');
+			// gulp.run('production');
 			gulp.watch(sources, ['lint']);
 		});
 });

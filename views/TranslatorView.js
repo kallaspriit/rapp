@@ -37,8 +37,8 @@ export default class TranslatorView extends React.Component {
 			}.bind(this);
 
 			return (
-				<li>
-					<a key={language} href="#" onClick={chooseLanguage}>{language}</a>
+				<li key={language}>
+					<a href="#" onClick={chooseLanguage}>{language}</a>
 					{t.language === language ? ' (current)' : ''}
 				</li>
 			);
@@ -46,14 +46,14 @@ export default class TranslatorView extends React.Component {
 
 		function renderTranslations(translations) {
 			function renderTranslation(translation) {
-				function renderTranslationItem(translationLanguage) {
+				function renderTranslationItem(translationLanguage, index) {
 					return (
-						<li>{translationLanguage}: {translation.translations[translationLanguage]}</li>
+						<li key={index}>{translationLanguage}: {translation.translations[translationLanguage]}</li>
 					);
 				}
 
 				return (
-					<li>
+					<li key={translation.key}>
 						{translation.key}
 						<ul>
 							{Object.keys(translation.translations).map(renderTranslationItem)}

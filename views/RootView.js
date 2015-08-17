@@ -1,5 +1,5 @@
 import React from 'react';
-import { Connector } from 'react-redux';
+import { connect } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { routerStateReducer } from 'redux-react-router';
 import { batchedUpdates } from 'redux-batched-updates';
@@ -27,8 +27,8 @@ if (window.debug) {
 
 	DevTools = ReduxReactTools.DevTools;
 	DebugPanel = ReduxReactTools.DebugPanel;
-	// LogMonitor = ReduxReactTools.LogMonitor;
-	LogMonitor = require('redux-slider-monitor');
+	LogMonitor = ReduxReactTools.LogMonitor;
+	// LogMonitor = require('redux-slider-monitor');
 
 	store = batchedUpdates(compose(
 		applyMiddleware(thunk),
@@ -51,7 +51,7 @@ if (window.debug) {
 	debugPanel = (
 		<DebugPanel
 			bottom
-			left
+			top
 			right
 		>
 			<DevTools
@@ -66,6 +66,7 @@ if (window.debug) {
 // https://www.youtube.com/watch?v=xsSnOQynTHs
 // http://gaearon.github.io/redux/index.html
 // https://github.com/gaearon/redux
+@connect(state => state)
 export default class RootView extends React.Component {
 
 	static propTypes = {
@@ -75,13 +76,11 @@ export default class RootView extends React.Component {
 	render() {
 		return (
 			<div>
-				<Connector select={s => s}>{(/* { router } */) => (
-					<div>
-						<h1>RAPP - The React Application Framework</h1>
-						<MenuComponent/>
-						{this.props.children}
-					</div>
-				)}</Connector>
+				<div>
+					<h1>RAPP - The React Application Framework</h1>
+					<MenuComponent/>
+					{this.props.children}
+				</div>
 				{debugPanel}
 			</div>
 		);
