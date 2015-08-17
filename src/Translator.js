@@ -172,7 +172,7 @@ export default class Translator {
 	 */
 	addTranslations(translations) {
 		// Object.assign(this.translations, translations);
-		this.translations = { ...this.translations, translations };
+		this.translations = { ...this.translations, ...translations };
 	}
 
 	/**
