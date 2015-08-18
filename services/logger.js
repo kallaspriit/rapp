@@ -1,23 +1,5 @@
 import { logger, ConsoleLog, SocketLog } from 'logviking';
-
-let config = {
-	debug: true,
-	logger: {
-		console: {
-			enabled: true,
-			options: {
-				componentNameWidth: 40
-			}
-		},
-		socket: {
-			enabled: false,
-			options: {
-				host: 'localhost',
-				port: 2222
-			}
-		}
-	}
-};
+import config from '../config/config';
 
 if (config.logger && config.debug === true) {
 	for (let loggerName in config.logger) {

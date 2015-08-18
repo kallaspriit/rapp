@@ -1,6 +1,7 @@
 import gulp from 'gulp';
 import gutil from 'gulp-util';
 import path from 'path';
+import fs from 'fs';
 import eslint from 'gulp-eslint';
 import webserver from 'gulp-webserver';
 import webpack from 'webpack';
@@ -165,6 +166,13 @@ gulp.task('test', ['build-specs'], function(done) {
 // start development server with hot-reloading
 // TODO run production server once dev server is running
 gulp.task('dev', function() {
+	// copy the developer.js file if it doesn't exist
+	if (!fs.existsSync('./config/developer.js')) {
+		gutil.log('copying config/_developer.js to config/developer.js');
+
+		fs.createReadStream('./config/_developer.js').pipe(fs.createWriteStream('./config/developer.js'));
+	}
+
 	new WebpackDevServer(webpack(webpackConfig.dev, handleWebpackResult), {
 		publicPath: webpackConfig.dev.output.publicPath,
 		hot: true,
