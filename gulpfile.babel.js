@@ -102,6 +102,16 @@ function runWebpack(config, done) {
 	});
 }
 
+// prepares the environment
+gulp.task('prepare', function() {
+	// copy the developer.js file if it doesn't exist
+	if (!fs.existsSync('./config/developer.js')) {
+		gutil.log('copying config/_developer.js to config/developer.js');
+
+		fs.createReadStream('./config/_developer.js').pipe(fs.createWriteStream('./config/developer.js'));
+	}
+});
+
 // lints the application sources
 gulp.task('lint', function() {
 
@@ -131,7 +141,7 @@ gulp.task('lint', function() {
 });
 
 // builds the production version bundle
-gulp.task('build', function(done) {
+gulp.task('build', ['prepare'], function(done) {
 	// copy static files
 	gulp.src(['gfx/**/*']).pipe(gulp.dest('build/production/gfx'));
 	gulp.src(['data/**/*']).pipe(gulp.dest('build/production/data'));
@@ -141,7 +151,7 @@ gulp.task('build', function(done) {
 
 // builds the development version bundle
 // see http://webpack.github.io/docs/configuration.html for options
-gulp.task('build-dev', function(done) {
+gulp.task('build-dev', ['prepare'], function(done) {
 	// copy gfx files
 	gulp.src(['gfx/**/*']).pipe(gulp.dest('build/dev/gfx'));
 
@@ -149,7 +159,7 @@ gulp.task('build-dev', function(done) {
 });
 
 // builds the specs bundle
-gulp.task('build-specs', function(done) {
+gulp.task('build-specs', ['prepare'], function(done) {
 	runWebpack(webpackConfig.specs, done);
 });
 
@@ -165,14 +175,7 @@ gulp.task('test', ['build-specs'], function(done) {
 
 // start development server with hot-reloading
 // TODO run production server once dev server is running
-gulp.task('dev', function() {
-	// copy the developer.js file if it doesn't exist
-	if (!fs.existsSync('./config/developer.js')) {
-		gutil.log('copying config/_developer.js to config/developer.js');
-
-		fs.createReadStream('./config/_developer.js').pipe(fs.createWriteStream('./config/developer.js'));
-	}
-
+gulp.task('dev', ['prepare'], function() {
 	new WebpackDevServer(webpack(webpackConfig.dev, handleWebpackResult), {
 		publicPath: webpackConfig.dev.output.publicPath,
 		hot: true,
