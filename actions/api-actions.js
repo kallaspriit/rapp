@@ -1,8 +1,10 @@
 import api from '../services/api';
-import log from '../services/log';
 import * as actions from '../constants/actions';
 import { start, success, error } from '../services/actions';
 import { convertMixedCaseToConstant } from '../services/util';
+import logger from '../services/logger';
+
+const log = logger.get('api-actions');
 
 let dispatchableApi = {},
 	apiActions = {};

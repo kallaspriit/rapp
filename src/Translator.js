@@ -1,4 +1,6 @@
-import log from '../services/log';
+import logger from '../services/logger';
+
+const log = logger.get('Translator');
 
 /**
  * Simple and minimal yet powerful translator.

@@ -23,6 +23,7 @@
   "dependencies": {
     "axios": "^0.5.4",
     "bluebird": "^2.9.34",
+    "logviking": "^2.0.0",
     "react": "^0.14.0-beta1",
     "react-redux": "^0.8.2",
     "react-router": "^1.0.0-beta3",

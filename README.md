@@ -47,7 +47,6 @@ It provides dev server with hot reload, production version generator, test frame
 - helper for writing map-based reducers
 
 ## TODO
-- make constants types once
 - testing views and components
 - dev server should survive errors
 - show broken component in red

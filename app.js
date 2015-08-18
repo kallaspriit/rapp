@@ -7,6 +7,11 @@ import { store } from './views/RootView';
 import routes from './config/routes';
 import css from './gfx/app.css'; // eslint-disable-line no-unused-vars
 import * as actions from './actions';
+import logger from './services/logger';
+
+const log = logger.get('app');
+
+log('bootstrapping application');
 
 // creates the component element, providing actions prop
 function createElement(Component, props) {
@@ -23,3 +28,5 @@ ReactDOM.render((
 		</Route>
 	</Router>
 ), document.getElementById('app'));
+
+log('bootstrap complete');
