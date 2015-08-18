@@ -1,5 +1,5 @@
 import { logger, ConsoleLog, SocketLog } from 'logviking';
-import config from '../config/config';
+import config from '../config';
 
 if (config.logger && config.debug === true) {
 	for (let loggerName in config.logger) {

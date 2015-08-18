@@ -4,10 +4,12 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { routerStateReducer } from 'redux-react-router';
 import { batchedUpdates } from 'redux-batched-updates';
 import thunk from 'redux-thunk';
+import config from '../config';
 import * as reducers from '../reducers';
 
 // components
 import MenuComponent from './components/MenuComponent';
+import VersionComponent from './components/VersionComponent';
 
 // setup the combined reducer and store, also export them
 export const reducer = combineReducers({
@@ -82,6 +84,7 @@ export default class RootView extends React.Component {
 					{this.props.children}
 				</div>
 				{debugPanel}
+				<VersionComponent version={config.version}/>
 			</div>
 		);
 	}

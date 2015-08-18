@@ -1,9 +1,14 @@
-import developer from './developer';
-
 // base configuration
-let base = {
+export default {
+
+	version: {
+		major: 0,
+		minor: 1,
+		patch: 0
+	},
 
 	debug: false,
+
 	logger: {
 		console: {
 			enabled: true,
@@ -21,6 +26,3 @@ let base = {
 	}
 
 };
-
-// base configuration values can be overridden by the developer config
-export default developer(base);
